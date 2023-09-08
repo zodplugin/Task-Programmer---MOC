@@ -31,6 +31,23 @@ class HomeController extends Controller
         ]);
     }
 
+    public function verifiedotp(){
+        return view('auth.verifyotp');
+    }
+
+    public function verifiedotpcheck(Request $request){
+        $request->validate([
+            'no_telp' => 'required|string|exists:users,no_telp'
+        ]);
+
+        $user = User::where('no_telp',$request->no_telp)->first();
+        if(!$user){
+            return redirect()->route('register')->with('error','Nomor Telepon Tidak Ada');
+        }
+
+        return redirect()->route('verifyotp',$request->no_telp)->with('success','Masukkan Kode OTP');
+    }
+
     public function verifyotp($no_telp){
         return view('auth.otp',[
             'no_telp' => $no_telp
@@ -70,11 +87,18 @@ class HomeController extends Controller
             return redirect()->back()->with('error','Nomor Telepon Tidak Ada');
         }
 
-        $otp = Str::upper(Str::random(5));
         $verification = VerificationCode::where('user_id',$user->id)->first();
         if(!$verification){
             return redirect()->back()->with('error','Nomor Telepon Tidak Ada');
         }
+
+        $now = Carbon::now();
+        if($now->isBefore($verification->expire_at)){
+            return redirect()->route('verifyotp',$user->no_telp)->with('error','Kode OTP Tidak Expired Silahkan Masukkan Kode OTP Sebelumnya');
+        }
+
+
+        $otp = Str::upper(Str::random(5));
         $verification->update([
             'otp' => $otp,
             'expire_at' => Carbon::now()->addMinutes(10)
