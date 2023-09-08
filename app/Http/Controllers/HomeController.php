@@ -7,6 +7,8 @@ use App\VerificationCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -57,4 +59,33 @@ class HomeController extends Controller
         Auth::login($user);
         return redirect()->route('home')->with('success','Berhasil Login');
     }
+
+    public function otp(){
+        return view('auth.generateotp');
+    }
+
+    public function generateotp(Request $request){
+        $user = User::where('no_telp',$request->no_telp)->first();
+        if(!$user){
+            return redirect()->back()->with('error','Nomor Telepon Tidak Ada');
+        }
+
+        $otp = Str::upper(Str::random(5));
+        $verification = VerificationCode::where('user_id',$user->id)->first();
+        if(!$verification){
+            return redirect()->back()->with('error','Nomor Telepon Tidak Ada');
+        }
+        $verification->update([
+            'otp' => $otp,
+            'expire_at' => Carbon::now()->addMinutes(10)
+        ]);
+
+        Http::get('http://47.251.18.83/send/XjhGkWLRp5sqivC0yaT6/'.$user->no_telp,[
+            'text' => $otp
+        ]);
+
+        return redirect(route('verifyotp',$user->no_telp))->with('success','Generate OTP Berhasil');
+    }
+
+
 }

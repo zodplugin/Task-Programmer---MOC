@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 // OTP
 Route::get('/otp-verify/{no_telp}','HomeController@verifyotp')->name('verifyotp');
 Route::post('/otp-verify','HomeController@verified')->name('verified');
+Route::get('/generate-otp','HomeController@otp')->name('generateotp');
+Route::post('/generate-otp','HomeController@generateotp')->name('generateotp');
+
 
 Route::get('/', function () {
     return view('auth.register');
