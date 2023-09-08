@@ -9,6 +9,7 @@
 
 ## Installation
 - ```cp .env.example .env```
+- ```composer install```
 - ```php artisan key:generate```
 - ```Masukkan TOKEN_API=```
 - ```php artisan migrate```
