@@ -11,8 +11,9 @@
 - ```cp .env.example .env```
 - ```composer install```
 - ```php artisan key:generate```
-- ```Input TOKEN_API in .env```
+- ```input TOKEN_API in .env```
 - ```php artisan migrate```
+- ```read config in readme.md```
 - ```php artisan serve```
 
 ## Config
