@@ -11,7 +11,7 @@
 - ```cp .env.example .env```
 - ```composer install```
 - ```php artisan key:generate```
-- ```Masukkan TOKEN_API=```
+- ```Input TOKEN_API in .env```
 - ```php artisan migrate```
 - ```php artisan serve```
 
