@@ -15,7 +15,7 @@
 - ```php artisan serve```
 
 ## Config
-Adding code in vendor laravel ui /vendor/laravel/ui/auth-backend/RegisterUsers.php
+Modification code in vendor laravel ui /vendor/laravel/ui/auth-backend/RegisterUsers.php
 ```
 public function register(Request $request)
     {
