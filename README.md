@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Instalation
+## Installation
 - ```cp .env.example .env```
 - ```php artisan key:generate```
 - ```Masukkan TOKEN_API=```
