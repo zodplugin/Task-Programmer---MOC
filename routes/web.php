@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // OTP
+Route::get('/verifikasi-otp','HomeController@verifiedotp')->name('verifiedotp');
+Route::post('/verifikasi-otp','HomeController@verifiedotpcheck')->name('verifiedotp');
 Route::get('/otp-verify/{no_telp}','HomeController@verifyotp')->name('verifyotp');
 Route::post('/otp-verify','HomeController@verified')->name('verified');
 Route::get('/generate-otp','HomeController@otp')->name('generateotp');

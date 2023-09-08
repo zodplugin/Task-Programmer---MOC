@@ -14,7 +14,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Kode OTP') }}</label>
 
                             <div class="col-md-6">
-                                <input id="otp" type="text" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" required autocomplete="otp" autofocus>
+                                <input id="otp" type="text" class="form-control @error('otp') is-invalid @enderror" name="otp" value="{{ old('otp') }}" placeholder="Masukkan Kode OTP" required autocomplete="otp" autofocus>
                                 <input type="hidden" name="no_telp" value="{{ $no_telp }}">
                                 @error('otp')
                                     <span class="invalid-feedback" role="alert">

@@ -42,6 +42,9 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('verifiedotp') }}">{{ __('Verifikasi') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('generateotp') }}">{{ __('Generate OTP') }}</a>
                             </li>
                             @if (Route::has('register'))
