@@ -89,7 +89,7 @@ class RegisterController extends Controller
             'expire_at' => Carbon::now()->addMinutes(10)
         ]);
 
-        $res = Http::get('http://47.251.18.83/send/'. env('TOKEN_API') .'/'.$user->no_telp,[
+        $res = Http::get('http://47.251.18.83/send/'. env('TOKEN_API','TIDAKADA') .'/'.$user->no_telp,[
             'text' => $otp
         ]);
 

@@ -7,6 +7,36 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Installation
+- ```cp .env.example .env```
+- ```composer install```
+- ```php artisan key:generate```
+- ```Input TOKEN_API in .env```
+- ```php artisan migrate```
+- ```php artisan serve```
+
+## Config
+Modification code in vendor laravel ui /vendor/laravel/ui/auth-backend/RegisterUsers.php
+```
+public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        if($user->status == 'KEY DATA tidak ada'){
+            return redirect()->back()->with('error','Token Tidak Sesuai/Tidak Ada');
+        }
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect(route('verifyotp',$user->no_telp))->with('success','Berhasil Login');
+    }
+```
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
