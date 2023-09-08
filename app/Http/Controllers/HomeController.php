@@ -95,9 +95,11 @@ class HomeController extends Controller
 
 
         $otp = Str::upper(Str::random(5));
-        $res = Http::get('http://47.251.18.83/send/'. env('TOKEN_API','TIDAKADA') .'/'.$user->no_telp,[
+        $res = Http::get('http://47.251.18.83/send/'. env('TOKEN_API') .'/'.$user->no_telp,[
             'text' => $otp
         ]);
+
+        dd(env('TOKEN_API'));
 
         if($res->body() == 'KEY DATA tidak ada'){
             return redirect()->back()->with('error','Token Tidak Sesuai/Tidak Ada');
