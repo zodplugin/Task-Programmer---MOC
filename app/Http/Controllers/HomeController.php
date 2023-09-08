@@ -88,10 +88,6 @@ class HomeController extends Controller
         }
 
         $verification = VerificationCode::where('user_id',$user->id)->first();
-        if(!$verification){
-            return redirect()->back()->with('error','Nomor Telepon Tidak Ada');
-        }
-
         $now = Carbon::now();
         if($now->isBefore($verification->expire_at)){
             return redirect()->route('verifyotp',$user->no_telp)->with('error','Kode OTP Tidak Expired Silahkan Masukkan Kode OTP Sebelumnya');
