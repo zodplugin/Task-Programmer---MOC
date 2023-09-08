@@ -89,9 +89,13 @@ class RegisterController extends Controller
             'expire_at' => Carbon::now()->addMinutes(10)
         ]);
 
-        Http::get('http://47.251.18.83/send/XjhGkWLRp5sqivC0yaT6/'.$user->no_telp,[
-            'text' => $otp
-        ]);
+        try {
+            Http::get('http://47.251.18.83/send/'. env('TOKEN_API') .'/'.$user->no_telp,[
+                'text' => $otp
+            ]);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error','API KEY IS NOT VALID');
+        }
 
         return $user;
     }
