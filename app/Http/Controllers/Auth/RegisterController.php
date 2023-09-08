@@ -94,7 +94,8 @@ class RegisterController extends Controller
         ]);
 
         if($res->body() == 'KEY DATA tidak ada'){
-            return $res->body();
+            $user->status = $res->body();
+            return $user;
         }
 
         return $user;
