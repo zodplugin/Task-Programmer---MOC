@@ -16,7 +16,7 @@ class CreateVerificationCodesTable extends Migration
         Schema::create('verification_codes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('otp');
+            $table->string('otp')->unique();
             $table->timestamp('expire_at')->nullable();
             $table->timestamps();
         });

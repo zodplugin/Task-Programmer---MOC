@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\VerificationCode;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -68,20 +71,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // return User::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'no_telp' => $data['no_telp'],
-        //     'provinsi' => $data['provinsi'],
-        //     'kota' => $data["kota"],
-        //     'kecamatan' => $data['kecamatan'],
-        //     'referal' => $data['referal']
-        // ]);
-        dd(Str::random(5));
-        return Str::random(5);
+        $user =  User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'no_telp' => $data['no_telp'],
+            'provinsi' => $data['provinsi'],
+            'kota' => $data["kota"],
+            'kecamatan' => $data['kecamatan'],
+            'referal' => $data['referal']
+        ]);
 
-        // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        // $charactersNumber = strlen($characters);
-        // Http::get('http://47.251.18.83/send/XjhGkWLRp5sqivC0yaT6/'.$data['notelp']);
+        $otp = Str::upper(Str::random(5));
+
+        VerificationCode::create([
+            'user_id' => $user->id,
+            'otp' => $otp,
+            'expire_at' => Carbon::now()->addMinutes(10)
+        ]);
+
+        Http::get('http://47.251.18.83/send/XjhGkWLRp5sqivC0yaT6/'.$user->no_telp,[
+            'text' => $otp
+        ]);
+
+        return $user;
     }
 }
